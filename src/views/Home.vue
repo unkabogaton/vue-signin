@@ -52,11 +52,11 @@ export default {
             null
           );
         } else {
-          console.error("Fetch failed");
+          alert("Fetch failed");
         }
       })
       .catch((error) => {
-        console.error("Error fetching:", error);
+        alert("Error fetching:", error);
       });
     this.dataReady = true;
   },

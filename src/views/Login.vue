@@ -70,12 +70,12 @@ export default {
             this.$router.push("/");
             this.signinLoading = true;
           } else {
-            console.error("Sign-in failed");
+            alert("Sign-in failed");
           }
         })
         .catch((error) => {
           // Handle network or other errors
-          console.error("Error signing in:", error);
+          alert("Error signing in:", error);
         });
     },
   },
