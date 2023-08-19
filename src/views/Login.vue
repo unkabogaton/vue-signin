@@ -61,7 +61,7 @@ export default {
           if (response.status === 200) {
             const responseData = response.data; // This is the response data from the server
             this.user = responseData;
-            console.log(this.user.displayName);
+            this.$store.state.user = responseData;
             this.$router.push("/");
           } else {
             console.error("Sign-in failed");
