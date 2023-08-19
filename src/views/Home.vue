@@ -3,7 +3,7 @@
     <div
       class="text-h3 font-weight-bold text-gray mt-15 text-center grey--text"
     >
-      Welcome
+      Welcome {{ this.$store.state.user.displayName }}
     </div>
     <v-card class="mx-auto mt-10 pa-5" elevation="15" width="800">
       <v-card-title>Territories</v-card-title>
