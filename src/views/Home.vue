@@ -110,10 +110,10 @@ export default {
   async created() {
     this.dataReady = false;
     await axios
-      .get("https://netzwelt-devtest.azurewebsites.net//Territories/All")
+      .get("api/Territories/All")
       .then((response) => {
         if (response.status === 200) {
-          this.territoriesRawData = response.data;
+          this.territoriesRawData = response.data.data;
           console.error(this.territoriesRawData);
         } else {
           console.error("Fetch failed");
