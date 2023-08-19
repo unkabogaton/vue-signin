@@ -35,15 +35,43 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
       username: "",
       password: "",
+      user: "",
     };
   },
   methods: {
-    async signIn() {},
+    async signIn() {
+      const signInData = {
+        username: this.username,
+        password: this.password,
+      };
+      await axios
+        .post("/api/Account/SignIn", signInData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            const responseData = response.data; // This is the response data from the server
+            this.user = responseData;
+            console.log(this.user.displayName);
+            this.$router.push("/");
+          } else {
+            console.error("Sign-in failed");
+          }
+        })
+        .catch((error) => {
+          // Handle network or other errors
+          console.error("Error signing in:", error);
+        });
+    },
   },
 };
 </script>
