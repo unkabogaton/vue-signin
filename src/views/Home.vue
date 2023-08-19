@@ -1,11 +1,16 @@
 <template>
   <v-container>
-    <v-card class="mx-auto mt-15" elevation="15" width="800">
+    <div
+      class="text-h3 font-weight-bold text-gray mt-15 text-center grey--text"
+    >
+      Welcome
+    </div>
+    <v-card class="mx-auto mt-10 pa-5" elevation="15" width="800">
       <v-card-title>Territories</v-card-title>
       <v-card-text>
         <v-treeview :items="items" :open="open" @update:active="updateActive">
           <template v-slot:prepend="{ open }">
-            <v-icon>{{
+            <v-icon :color="getIconColor(open)">{{
               open ? "mdi-map-marker-multiple" : "mdi-map-marker"
             }}</v-icon>
           </template>
@@ -97,6 +102,9 @@ export default {
   methods: {
     updateActive(newOpen) {
       this.open = newOpen;
+    },
+    getIconColor(isOpen) {
+      return isOpen ? "#1565C0" : "#1A237E";
     },
   },
 };
