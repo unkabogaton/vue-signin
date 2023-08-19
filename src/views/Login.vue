@@ -42,7 +42,6 @@ export default {
     return {
       username: "",
       password: "",
-      user: "",
     };
   },
   methods: {
@@ -60,7 +59,6 @@ export default {
         .then((response) => {
           if (response.status === 200) {
             const responseData = response.data; // This is the response data from the server
-            this.user = responseData;
             this.$store.state.user = responseData;
             this.$router.push("/");
           } else {
