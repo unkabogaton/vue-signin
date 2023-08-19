@@ -75,7 +75,7 @@ export default {
         })
         .catch((error) => {
           // Handle network or other errors
-          alert("Error signing in:", error);
+          console.log("Error signing in:", error);
         });
     },
   },
