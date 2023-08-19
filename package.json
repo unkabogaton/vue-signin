@@ -30,6 +30,9 @@
     "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.7.0"
   },
+  "engines": {
+    "node": ">=8.0.0 <17.0.0"
+  },
   "eslintConfig": {
     "root": true,
     "env": {
