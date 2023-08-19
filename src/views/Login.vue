@@ -58,11 +58,7 @@ export default {
         password: this.password,
       };
       await axios
-        .post("/api/Account/SignIn", signInData, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
+        .post("/api/Account/SignIn", signInData)
         .then((response) => {
           if (response.status === 200) {
             const responseData = response.data; // This is the response data from the server
