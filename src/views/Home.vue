@@ -5,11 +5,17 @@
     >
       Welcome {{ this.$store.state.user.displayName }}
     </div>
-    <v-card class="mx-auto mt-10 pa-5" elevation="15" width="800">
+    <v-card class="mx-auto mt-10 pa-5 mb-15" elevation="15" width="800">
       <v-card-title>Territories</v-card-title>
-      <v-card-text>
+      <div class="text-center ma-7" v-if="!dataReady">
+        <v-progress-circular
+          :size="50"
+          color="primary"
+          indeterminate
+        ></v-progress-circular>
+      </div>
+      <v-card-text v-else>
         <v-treeview
-          v-if="dataReady"
           :items="hierarchicalTerritories"
           :open="open"
           @update:active="updateActive"

@@ -23,7 +23,12 @@
                 type="password"
                 dense
               ></v-text-field>
-              <v-btn type="submit" dark color="blue-grey" class="mt-3"
+              <v-btn
+                type="submit"
+                dark
+                color="blue-grey"
+                class="mt-3"
+                :loading="signinLoading"
                 >Sign In</v-btn
               >
             </v-form>
@@ -42,10 +47,12 @@ export default {
     return {
       username: "",
       password: "",
+      signinLoading: false,
     };
   },
   methods: {
     async signIn() {
+      this.signinLoading = true;
       const signInData = {
         username: this.username,
         password: this.password,
@@ -61,6 +68,7 @@ export default {
             const responseData = response.data; // This is the response data from the server
             this.$store.state.user = responseData;
             this.$router.push("/");
+            this.signinLoading = true;
           } else {
             console.error("Sign-in failed");
           }
