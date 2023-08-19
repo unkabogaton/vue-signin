@@ -8,7 +8,12 @@
     <v-card class="mx-auto mt-10 pa-5" elevation="15" width="800">
       <v-card-title>Territories</v-card-title>
       <v-card-text>
-        <v-treeview :items="items" :open="open" @update:active="updateActive">
+        <v-treeview
+          v-if="dataReady"
+          :items="items"
+          :open="open"
+          @update:active="updateActive"
+        >
           <template v-slot:prepend="{ open }">
             <v-icon :color="getIconColor(open)">{{
               open ? "mdi-map-marker-multiple" : "mdi-map-marker"
@@ -21,6 +26,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -97,7 +103,26 @@ export default {
         },
       ],
       open: [],
+      territoriesRawData: [],
+      dataReady: true,
     };
+  },
+  async created() {
+    this.dataReady = false;
+    await axios
+      .get("https://netzwelt-devtest.azurewebsites.net//Territories/All")
+      .then((response) => {
+        if (response.status === 200) {
+          this.territoriesRawData = response.data;
+          console.error(this.territoriesRawData);
+        } else {
+          console.error("Fetch failed");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching:", error);
+      });
+    this.dataReady = true;
   },
   methods: {
     updateActive(newOpen) {
