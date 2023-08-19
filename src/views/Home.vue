@@ -44,7 +44,7 @@ export default {
   async created() {
     this.dataReady = false;
     await axios
-      .get("api/Territories/All")
+      .get("https://netzwelt-devtest.azurewebsites.net/Territories/All")
       .then((response) => {
         if (response.status === 200) {
           this.hierarchicalTerritories = this.buildHierarchy(

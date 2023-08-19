@@ -58,7 +58,10 @@ export default {
         password: this.password,
       };
       await axios
-        .post("/api/Account/SignIn", signInData)
+        .post(
+          "https://netzwelt-devtest.azurewebsites.net/Account/SignIn",
+          signInData
+        )
         .then((response) => {
           if (response.status === 200) {
             const responseData = response.data; // This is the response data from the server
