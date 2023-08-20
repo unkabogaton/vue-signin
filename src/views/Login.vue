@@ -81,15 +81,14 @@ export default {
       //   });
       // this.signinLoading = true;
 
-      const instance = axios.create({
-        baseURL: "signin-netzwelt.vercel.app", // Set your base URL here
-      });
-
-      await instance
-        .post("/api/Account/SignIn", signInData)
+      await axios
+        .post(
+          "https://signin-netzwelt.vercel.app" + "/api/Account/SignIn",
+          signInData
+        )
         .then((response) => {
           if (response.status === 200) {
-            const responseData = response.data; // This is the response data from the server
+            const responseData = response.data;
             this.$store.state.user = responseData;
             this.$router.push("/");
             this.signinLoading = true;
@@ -98,7 +97,6 @@ export default {
           }
         })
         .catch((error) => {
-          // Handle network or other errors
           console.log("Error signing in:", error);
         });
     },

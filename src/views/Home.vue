@@ -44,7 +44,7 @@ export default {
   async created() {
     this.dataReady = false;
     const instance = axios.create({
-      baseURL: "signin-netzwelt.vercel.app", // Set your base URL here
+      baseURL: "signin-netzwelt.vercel.app",
     });
     // await fetch("api/Territories/All")
     //   .then((response) => {
