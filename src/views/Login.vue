@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 
 export default {
   data() {
@@ -57,22 +57,45 @@ export default {
         username: this.username,
         password: this.password,
       };
-      await axios
-        .post("/api/Account/SignIn", signInData)
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(signInData),
+      };
+      await fetch("/api/Account/SignIn", requestOptions)
         .then((response) => {
-          if (response.status === 200) {
-            const responseData = response.data; // This is the response data from the server
-            this.$store.state.user = responseData;
-            this.$router.push("/");
-            this.signinLoading = true;
-          } else {
-            alert("Sign-in failed");
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
           }
+          return response.json();
+        })
+        .then((userData) => {
+          this.$store.state.user = userData;
+          this.$router.push("/");
         })
         .catch((error) => {
-          // Handle network or other errors
-          console.log("Error signing in:", error);
+          console.error("Error:", error);
         });
+      this.signinLoading = true;
+
+      //   await axios
+      //     .post("/api/Account/SignIn", signInData)
+      //     .then((response) => {
+      //       if (response.status === 200) {
+      //         const responseData = response.data; // This is the response data from the server
+      //         this.$store.state.user = responseData;
+      //         this.$router.push("/");
+      //         this.signinLoading = true;
+      //       } else {
+      //         alert("Sign-in failed");
+      //       }
+      //     })
+      //     .catch((error) => {
+      //       // Handle network or other errors
+      //       console.log("Error signing in:", error);
+      //     });
     },
   },
 };
