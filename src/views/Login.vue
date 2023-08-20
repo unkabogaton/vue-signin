@@ -82,10 +82,7 @@ export default {
       // this.signinLoading = true;
 
       await axios
-        .post(
-          "https://signin-netzwelt.vercel.app" + "/api/Account/SignIn",
-          signInData
-        )
+        .post("/api/Account/SignIn", signInData)
         .then((response) => {
           if (response.status === 200) {
             const responseData = response.data;
