@@ -40,7 +40,7 @@
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
 
 export default {
   data() {
@@ -57,45 +57,50 @@ export default {
         username: this.username,
         password: this.password,
       };
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(signInData),
-      };
-      await fetch("/api/Account/SignIn", requestOptions)
+      // const requestOptions = {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(signInData),
+      // };
+      // await fetch("/api/Account/SignIn", requestOptions)
+      //   .then((response) => {
+      //     if (!response.ok) {
+      //       console.log(response);
+      //       throw new Error("Network response was not ok");
+      //     }
+      //     return response.json();
+      //   })
+      //   .then((userData) => {
+      //     this.$store.state.user = userData;
+      //     this.$router.push("/");
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error:", error);
+      //   });
+      // this.signinLoading = true;
+
+      const instance = axios.create({
+        baseURL: "signin-netzwelt.vercel.app", // Set your base URL here
+      });
+
+      await instance
+        .post("/api/Account/SignIn", signInData)
         .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
+          if (response.status === 200) {
+            const responseData = response.data; // This is the response data from the server
+            this.$store.state.user = responseData;
+            this.$router.push("/");
+            this.signinLoading = true;
+          } else {
+            alert("Sign-in failed");
           }
-          return response.json();
-        })
-        .then((userData) => {
-          this.$store.state.user = userData;
-          this.$router.push("/");
         })
         .catch((error) => {
-          console.error("Error:", error);
+          // Handle network or other errors
+          console.log("Error signing in:", error);
         });
-      this.signinLoading = true;
-
-      //   await axios
-      //     .post("/api/Account/SignIn", signInData)
-      //     .then((response) => {
-      //       if (response.status === 200) {
-      //         const responseData = response.data; // This is the response data from the server
-      //         this.$store.state.user = responseData;
-      //         this.$router.push("/");
-      //         this.signinLoading = true;
-      //       } else {
-      //         alert("Sign-in failed");
-      //       }
-      //     })
-      //     .catch((error) => {
-      //       // Handle network or other errors
-      //       console.log("Error signing in:", error);
-      //     });
     },
   },
 };

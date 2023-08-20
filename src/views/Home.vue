@@ -32,7 +32,7 @@
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
 export default {
   data() {
     return {
@@ -43,38 +43,41 @@ export default {
   },
   async created() {
     this.dataReady = false;
-    await fetch("api/Territories/All")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((territoriesData) => {
-        console.log("Response data:", territoriesData.data);
-        this.hierarchicalTerritories = this.buildHierarchy(
-          territoriesData.data,
-          null
-        );
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-    // await axios
-    //   .get("api/Territories/All")
+    const instance = axios.create({
+      baseURL: "signin-netzwelt.vercel.app", // Set your base URL here
+    });
+    // await fetch("api/Territories/All")
     //   .then((response) => {
-    //     if (response.status === 200) {
-    //       this.hierarchicalTerritories = this.buildHierarchy(
-    //         response.data.data,
-    //         null
-    //       );
-    //     } else {
-    //       alert("Fetch failed");
+    //     if (!response.ok) {
+    //       throw new Error("Network response was not ok");
     //     }
+    //     return response.json();
+    //   })
+    //   .then((territoriesData) => {
+    //     console.log("Response data:", territoriesData.data);
+    //     this.hierarchicalTerritories = this.buildHierarchy(
+    //       territoriesData.data,
+    //       null
+    //     );
     //   })
     //   .catch((error) => {
-    //     alert("Error fetching:", error);
+    //     console.error("Error:", error);
     //   });
+    await instance
+      .get("api/Territories/All")
+      .then((response) => {
+        if (response.status === 200) {
+          this.hierarchicalTerritories = this.buildHierarchy(
+            response.data.data,
+            null
+          );
+        } else {
+          alert("Fetch failed");
+        }
+      })
+      .catch((error) => {
+        alert("Error fetching:", error);
+      });
     this.dataReady = true;
   },
   methods: {
